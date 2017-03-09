@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .container{text-align: center;}
+        *{ font-size: 30px}
+        span{background-color: red; margin-left: 10px; padding: 10px; display: inline-block}
+        #result{text-align: center}
+        .btn{margin-left: 20px}
+        button{border-radius: 20px}
+    </style>
+</head>
+<body>
+<div class="container">
+    <input id="number" type="text">
+    <button onclick="leftIn()">左侧入</button>
+    <button onclick="rightIn()">右侧入</button>
+    <button class="btn" onclick="leftOut()">左侧出</button>
+    <button onclick="rightOut()">右侧出</button>
+    <button class="btn" onclick="eleSort()">排序</button>
+</div>
+<br>
+<div id="result"></div>
+
+<script type="text/javascript">
+    var datas = [];
+    function leftIn() {
+        var result = document.getElementById("result");
+        var data= document.getElementById("number").value;
+        datas.unshift(data);
+        if (validate(data)){
+            var element = document.createElement("span");
+            element.style.height = data + 'px';
+            var chidren = result.childNodes;
+            result.insertBefore(element, chidren[0]);
+        }
+        document.getElementById("number").value = "";
+    }
+    function rightIn(){
+        var result = document.getElementById("result");
+        var data= document.getElementById("number").value;
+        datas.push(data);
+        if (validate(data)){
+            var element = document.createElement("span");
+            element.style.height = data + 'px';
+            console.log(element);
+            result.appendChild(element);
+        }
+        document.getElementById("number").value = "";
+    }
+
+    function leftOut() {
+        var result = document.getElementById("result");
+        var children = result.childNodes;
+        result.removeChild(children[0]);
+        datas.shift();
+    }
+
+    function rightOut() {
+        var result = document.getElementById("result");
+        var children = result.childNodes;
+        var len = children.length;
+        result.removeChild(children[len-1]);
+        datas.pop();
+    }
+
+    function validate(data) {
+        var temp = parseInt(data);
+        if(temp<10 || temp>100){
+            alert("输入的数字应在10-100之间");
+            return false;
+        }
+        else if(result.childNodes.length>=60){
+            alert("队列已满！");
+            return false;
+        }
+        return true;
+    }
+
+    function eleSort(){
+        var result = document.getElementById("result");
+        datas.sort();
+        result.innerHTML = "";
+        for(var i=0;i<datas.length;i++){
+            var element = document.createElement("span");
+            element.style.height = datas[i] + 'px';
+            result.appendChild(element);
+        }
+    }
+</script>
+
+</body>
+</html>
